@@ -15,9 +15,17 @@ fi
 if has_command gcloud; then
   info "gcloud: $(gcloud --version 2>/dev/null | head -1)"
 
-  # gcloud installs to a cask path; ensure it's on PATH via shell config.
-  _gcloud_path="$(brew --prefix)/share/google-cloud-sdk"
-  if [[ -f "${_gcloud_path}/path.zsh.inc" ]]; then
+  # gcloud installs to a cask path; check both old (google-cloud-sdk) and
+  # new (gcloud-cli) cask names since the cask was renamed.
+  _gcloud_path=""
+  for _candidate in "google-cloud-sdk" "gcloud-cli"; do
+    _p="$(brew --prefix)/share/${_candidate}"
+    if [[ -f "${_p}/path.zsh.inc" ]]; then
+      _gcloud_path="$_p"
+      break
+    fi
+  done
+  if [[ -n "$_gcloud_path" ]]; then
     append_marked "${HOME}/.zshrc" "gcloud" \
       "source '${_gcloud_path}/path.zsh.inc'
 source '${_gcloud_path}/completion.zsh.inc'"

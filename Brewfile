@@ -2,7 +2,7 @@
 # Edit this file to add/remove packages, then re-run: brew bundle --file=Brewfile
 
 # ── Taps ──────────────────────────────────────────────────────────────────────
-tap "homebrew/bundle"
+tap "hashicorp/tap"              # terraform
 
 # ── CLI essentials ────────────────────────────────────────────────────────────
 brew "git"
@@ -42,7 +42,7 @@ brew "kubectl"
 brew "helm"
 brew "k9s"
 brew "awscli"
-brew "terraform"
+brew "hashicorp/tap/terraform"
 
 # ── Editor ────────────────────────────────────────────────────────────────────
 brew "neovim"
@@ -68,7 +68,7 @@ cask "tableplus"               # database GUI
 cask "bruno"                   # API client
 cask "cleanshot"               # screenshot tool
 cask "rectangle"               # window manager
-cask "google-cloud-sdk"        # gcloud CLI (installed as cask for auto-updates)
+cask "gcloud-cli"              # gcloud CLI (formerly google-cloud-sdk)
 cask "1password-cli"           # secrets management
 
 # ── Fonts ─────────────────────────────────────────────────────────────────────
