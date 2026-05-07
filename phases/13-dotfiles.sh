@@ -25,14 +25,19 @@ _chezmoi_cfg_dir="${HOME}/.config/chezmoi"
 if ! is_dryrun; then
   mkdir -p "$_chezmoi_cfg_dir"
   # Preserve existing chezmoi.toml if it already points to our source.
-  _existing_src=$(chezmoi source-path 2>/dev/null || echo "")
-  if [[ "$_existing_src" != "$_chezmoi_src" ]]; then
-    backup_file "${_chezmoi_cfg_dir}/chezmoi.toml"
-    printf 'sourceDir = "%s"\n' "${_chezmoi_src}" > "${_chezmoi_cfg_dir}/chezmoi.toml"
-    info "Wrote chezmoi config: sourceDir = ${_chezmoi_src}"
-  else
-    skip "chezmoi config already points to bootstrap chezmoi/"
-  fi
+  # Always write the full config (idempotent — same output on every run).
+  # This ensures [data] section is always present for template rendering.
+  _git_name=$(git config --global user.name 2>/dev/null || echo "")
+  _git_email=$(git config --global user.email 2>/dev/null || echo "")
+  backup_file "${_chezmoi_cfg_dir}/chezmoi.toml"
+  cat > "${_chezmoi_cfg_dir}/chezmoi.toml" <<CHEZMOI_TOML
+sourceDir = "${_chezmoi_src}"
+
+[data]
+    name  = "${_git_name}"
+    email = "${_git_email}"
+CHEZMOI_TOML
+  info "chezmoi config: sourceDir = ${_chezmoi_src}, name = ${_git_name}"
 else
   printf "${_YLW}  [dry-run]${_RST} write chezmoi.toml sourceDir = %s\n" "$_chezmoi_src" >&2
 fi
