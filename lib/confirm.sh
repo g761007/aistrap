@@ -12,7 +12,9 @@ ask_yes_no() {
   local answer
   printf "${_BLD}%s [y/N] ${_RST}" "$prompt" >&2
   read -r answer
-  [[ "${answer,,}" == "y" || "${answer,,}" == "yes" ]]
+  local lower
+  lower=$(printf '%s' "$answer" | tr '[:upper:]' '[:lower:]')
+  [[ "$lower" == "y" || "$lower" == "yes" ]]
 }
 
 # confirm_phase <phase_name>

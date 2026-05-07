@@ -15,7 +15,8 @@ warn "This removes bootstrap marker blocks from ~/.zshrc."
 warn "It does NOT uninstall any packages or delete files."
 printf "\nContinue? [y/N] "
 read -r _ans
-[[ "${_ans,,}" == "y" || "${_ans,,}" == "yes" ]] || { log "Aborted."; exit 0; }
+_ans_lower=$(printf '%s' "$_ans" | tr '[:upper:]' '[:lower:]')
+[[ "$_ans_lower" == "y" || "$_ans_lower" == "yes" ]] || { log "Aborted."; exit 0; }
 
 _markers=(
   "mise"
