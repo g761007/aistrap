@@ -1,144 +1,101 @@
-# Starship — Powerlevel10k Rainbow style
-# Requires Nerd Font (JetBrainsMono / SauceCodePro Nerd Font)
-# Powerline separators:  (U+E0B0) /  (U+E0B2) / fine:  (U+E0B1) /  (U+E0B3)
+# Starship — P10k Agnoster style
+# Layout: [time][user@host][python][ruby][node][path][git]
+# Requires Nerd Font
 
 # ── Left prompt ───────────────────────────────────────────────────────────────
-format = """
-$os\
-[](bg:#61AFEF fg:#282C34)\
+# Language segments use custom modules so they always show regardless of
+# which files are in the current directory.
+format = """\
+$time\
+[](bg:#262626 fg:#111111)\
 $username$hostname\
-[](bg:#98C379 fg:#61AFEF)\
+${custom.python_ver}\
+${custom.ruby_ver}\
+${custom.node_ver}\
+[](bg:#303030 fg:#3E7C3E)\
 $directory\
-[](bg:#E5C07B fg:#98C379)\
+[](bg:#4B3882 fg:#303030)\
 $git_branch\
 $git_status\
-[](bg:#C678DD fg:#E5C07B)\
-$python\
-$nodejs\
-$ruby\
-$rust\
-$golang\
-[](fg:#C678DD)\
-$fill\
+[](fg:#4B3882)\
 $line_break\
-$status\
 $character"""
 
-# ── Right prompt ──────────────────────────────────────────────────────────────
-right_format = """
-$cmd_duration\
-[](fg:#3E4452)\
-$time\
-[](fg:#3E4452)"""
+# ── Time ──────────────────────────────────────────────────────────────────────
+[time]
+disabled    = false
+time_format = "%H:%M:%S"
+style       = "bg:#111111 fg:#9E9E9E"
+format      = "[ $time ]($style)"
 
-# ── OS ───────────────────────────────────────────────────────────────────────
-[os]
-disabled = false
-format   = "[$symbol]($style)"
-style    = "bg:#282C34 fg:#ABB2BF bold"
-
-[os.symbols]
-Macos   = "  "
-Linux   = "  "
-Windows = "  "
-
-# ── Username / Hostname (show only over SSH) ──────────────────────────────────
+# ── Username / Hostname ───────────────────────────────────────────────────────
 [username]
-show_always = false
-style_user  = "bg:#61AFEF fg:#282C34 bold"
-style_root  = "bg:#E06C75 fg:#282C34 bold"
+show_always = true
+style_user  = "bg:#262626 fg:#E0E0E0"
+style_root  = "bg:#CC342D fg:#FFFFFF bold"
 format      = "[ $user]($style)"
 
 [hostname]
-ssh_only = true
-style    = "bg:#61AFEF fg:#282C34"
+ssh_only = false
+style    = "bg:#262626 fg:#9E9E9E"
 format   = "[@$hostname ]($style)"
+trim_at  = "."
+
+# ── Python (always show via custom module) ────────────────────────────────────
+[custom.python_ver]
+command = 'python3 -V 2>/dev/null | cut -d" " -f2'
+format  = '[](bg:#FAAB2E fg:#262626)[ 🐍 $output ]($style)'
+style   = "bg:#FAAB2E fg:#111111 bold"
+when    = 'command -v python3 >/dev/null 2>&1'
+shell   = ["bash", "--noprofile", "--norc"]
+
+# ── Ruby (always show via custom module) ──────────────────────────────────────
+[custom.ruby_ver]
+command = 'ruby -v 2>/dev/null | awk "{print \$2}"'
+format  = '[](bg:#CC342D fg:#FAAB2E)[ 💎 $output ]($style)'
+style   = "bg:#CC342D fg:#FFFFFF bold"
+when    = 'command -v ruby >/dev/null 2>&1'
+shell   = ["bash", "--noprofile", "--norc"]
+
+# ── Node.js (always show via custom module) ───────────────────────────────────
+[custom.node_ver]
+command = 'node -v 2>/dev/null | sed "s/v//"'
+format  = '[](bg:#3E7C3E fg:#CC342D)[ $output ]($style)'
+style   = "bg:#3E7C3E fg:#FFFFFF bold"
+when    = 'command -v node >/dev/null 2>&1'
+shell   = ["bash", "--noprofile", "--norc"]
 
 # ── Directory ─────────────────────────────────────────────────────────────────
 [directory]
-style             = "bg:#98C379 fg:#282C34 bold"
-format            = "[ 󰉋 $path ]($style)"
-truncation_length = 3
-truncate_to_repo  = true
-read_only         = " 󰌾"
+style             = "bg:#303030 fg:#87D7FF bold"
+format            = "[ $path ]($style)"
+truncation_length = 4
+truncate_to_repo  = false
+truncation_symbol = "…/"
 home_symbol       = "~"
+read_only         = " 󰌾"
 
-[directory.substitutions]
-"Documents" = "󰈙"
-"Downloads" = " "
-"Desktop"   = "󰇄"
-
-# ── Git ───────────────────────────────────────────────────────────────────────
+# ── Git branch ────────────────────────────────────────────────────────────────
 [git_branch]
 symbol = " "
-style  = "bg:#E5C07B fg:#282C34 bold"
+style  = "bg:#4B3882 fg:#FFFFFF bold"
 format = "[ $symbol$branch ]($style)"
 
+# ── Git status ────────────────────────────────────────────────────────────────
 [git_status]
-style    = "bg:#E5C07B fg:#282C34"
+style    = "bg:#4B3882 fg:#FFFFFF"
 format   = "[$all_status$ahead_behind]($style)[ ]($style)"
 ahead    = "⇡${count}"
 behind   = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+diverged = "⇕"
 modified = "!${count}"
 untracked = "?${count}"
 staged   = "+${count}"
-deleted  = "✘${count}"
+deleted  = "✘"
 stashed  = "≡"
-conflicted = "~${count}"
-
-# ── Languages ─────────────────────────────────────────────────────────────────
-[python]
-symbol           = " "
-style            = "bg:#C678DD fg:#282C34 bold"
-format           = '[ $symbol($version )(\($virtualenv\) )]($style)'
-detect_extensions = ["py"]
-
-[nodejs]
-symbol       = " "
-style        = "bg:#C678DD fg:#282C34 bold"
-format       = "[ $symbol($version )]($style)"
-detect_files = ["package.json", ".nvmrc", "yarn.lock"]
-
-[ruby]
-symbol = " "
-style  = "bg:#C678DD fg:#282C34 bold"
-format = "[ $symbol($version )]($style)"
-
-[rust]
-symbol = "󱘗 "
-style  = "bg:#C678DD fg:#282C34 bold"
-format = "[ $symbol($version )]($style)"
-
-[golang]
-symbol = " "
-style  = "bg:#C678DD fg:#282C34 bold"
-format = "[ $symbol($version )]($style)"
-
-# ── Right side ────────────────────────────────────────────────────────────────
-[fill]
-symbol = " "
-
-[cmd_duration]
-min_time = 2000
-style    = "fg:#ABB2BF italic"
-format   = "[ 󱎫 $duration ]($style)"
-
-[time]
-disabled    = false
-time_format = "%H:%M"
-style       = "bg:#3E4452 fg:#ABB2BF"
-format      = "[ 󰥔 $time ]($style)"
+clean    = "✔"
 
 # ── Prompt character ──────────────────────────────────────────────────────────
 [character]
-success_symbol = "[❯](bold #98C379)"
-error_symbol   = "[❯](bold #E06C75)"
-vimcmd_symbol  = "[❮](bold #C678DD)"
-
-[status]
-disabled = false
-style    = "fg:#E06C75 bold"
-format   = "[$symbol$status ]($style)"
-symbol   = "✘ "
-success_symbol = ""
+success_symbol = "[$](bold #98C379)"
+error_symbol   = "[$](bold #E06C75)"
