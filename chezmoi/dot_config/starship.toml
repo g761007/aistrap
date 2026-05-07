@@ -57,7 +57,7 @@ shell   = ["bash", "--noprofile", "--norc"]
 # ── Node.js ───────────────────────────────────────────────────────────────────
 [custom.node_ver]
 command = 'node -v 2>/dev/null | sed "s/v//"'
-format  = '[](bg:#005F87 fg:#870000)[ 󰎙 $output ]($style)'
+format  = '[](bg:#005F87 fg:#870000)[  $output ]($style)'
 style   = "bg:#005F87 fg:#FFFFFF bold"
 when    = 'command -v node >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
@@ -68,7 +68,7 @@ style             = "bg:#0087AF fg:#FFFFFF bold"
 format            = "[ $path ]($style)"
 truncation_length = 4
 truncate_to_repo  = false
-truncation_symbol = "…/"
+truncation_symbol = " "
 home_symbol       = "~"
 read_only         = " 󰌾"
 
