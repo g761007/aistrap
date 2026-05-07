@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# ai-update-check — Daily background check for AI CLI updates.
+# Writes pending updates to ~/.cache/ai-tools-update/pending.
+# Stamped so it runs at most once per day.
+
+CACHE_DIR="${HOME}/.cache/ai-tools-update"
+STAMP="${CACHE_DIR}/last-check"
+PENDING="${CACHE_DIR}/pending"
+
+# Run at most once per 24 hours.
+if [[ -f "$STAMP" ]]; then
+  _now=$(date +%s)
+  _last=$(stat -f %m "$STAMP" 2>/dev/null || echo 0)
+  (( _now - _last < 86400 )) && exit 0
+fi
+
+mkdir -p "$CACHE_DIR"
+: > "$PENDING"  # reset pending list
+
+_pkgs=("@anthropic-ai/claude-code" "@openai/codex" "@google/gemini-cli")
+
+for _pkg in "${_pkgs[@]}"; do
+  # Get installed version.
+  _cur=$(npm ls -g "$_pkg" --json 2>/dev/null \
+    | command grep -o '"version":"[^"]*"' \
+    | head -1 \
+    | cut -d'"' -f4)
+  [[ -z "$_cur" ]] && continue
+
+  # Get latest published version.
+  _latest=$(npm view "$_pkg" version 2>/dev/null || true)
+  [[ -z "$_latest" ]] && continue
+
+  if [[ "$_cur" != "$_latest" ]]; then
+    echo "${_pkg}: ${_cur} → ${_latest}" >> "$PENDING"
+  fi
+done
+
+touch "$STAMP"

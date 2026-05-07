@@ -1,0 +1,21 @@
+gui:
+  theme:
+    activeBorderColor:
+      - green
+      - bold
+    inactiveBorderColor:
+      - default
+  showIcons: true
+  nerdFontsVersion: "3"
+  mouseEvents: true
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+
+keybinding:
+  universal:
+    quit: q
+    return: <esc>
+    togglePanel: <tab>

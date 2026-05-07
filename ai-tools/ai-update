@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# ai-update — Manually upgrade all AI CLI tools to their latest versions.
+
+set -euo pipefail
+
+_pkgs=("@anthropic-ai/claude-code" "@openai/codex" "@google/gemini-cli")
+
+echo "Updating AI CLI tools..."
+for _pkg in "${_pkgs[@]}"; do
+  echo "  Updating ${_pkg}..."
+  npm update -g "$_pkg"
+done
+
+# Clear the pending-update cache so the next shell open doesn't re-alert.
+_pending="${HOME}/.cache/ai-tools-update/pending"
+[[ -f "$_pending" ]] && : > "$_pending"
+
+# Reset the stamp so an update check runs fresh on next shell launch.
+_stamp="${HOME}/.cache/ai-tools-update/last-check"
+[[ -f "$_stamp" ]] && rm -f "$_stamp"
+
+echo "Done. Run 'claude --version && codex --version && gemini --version' to verify."

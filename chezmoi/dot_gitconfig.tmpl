@@ -1,0 +1,43 @@
+[user]
+    name  = {{ .name }}
+    email = {{ .email }}
+
+[core]
+    editor     = nvim
+    pager      = delta
+    autocrlf   = input
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = false
+
+[push]
+    autoSetupRemote = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate    = true
+    side-by-side = true
+    line-numbers = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[alias]
+    st   = status
+    co   = checkout
+    cb   = checkout -b
+    br   = branch
+    lg   = log --oneline --graph --decorate --all
+    undo = reset HEAD~1 --mixed
+    wip  = "!git add -A && git commit -m 'WIP'"
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/

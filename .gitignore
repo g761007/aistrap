@@ -1,0 +1,26 @@
+# Bootstrap project gitignore
+
+# claude
+.claude/settings.local.json
+
+# Oh-my-claudecode state
+.omc/
+
+# Runtime backup directories (never commit)
+.bootstrap-backup/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Secrets (never commit)
+*.pem
+*.key
+*.env
+.env*
+
