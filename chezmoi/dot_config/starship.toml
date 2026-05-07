@@ -4,17 +4,17 @@
 
 format = """\
 $time\
-[](bg:#3A3A3A fg:#262626)\
+[](bg:#3A3A3A fg:#262626)\
 $username$hostname\
 ${custom.python_ver}\
 ${custom.ruby_ver}\
 ${custom.node_ver}\
-[](bg:#0087AF fg:#005F87)\
+[](bg:#0087AF fg:#005F87)\
 $directory\
-[](bg:#AFD700 fg:#0087AF)\
+[](bg:#AFD700 fg:#0087AF)\
 $git_branch\
 $git_status\
-[](fg:#AFD700)\
+[](fg:#AFD700)\
 $line_break\
 $character"""
 
@@ -41,7 +41,7 @@ trim_at  = "."
 # ── Python ────────────────────────────────────────────────────────────────────
 [custom.python_ver]
 command = 'python3 -V 2>/dev/null | cut -d" " -f2'
-format  = '[](bg:#D7AF00 fg:#3A3A3A)[ 🐍 $output ]($style)'
+format  = '[](bg:#D7AF00 fg:#3A3A3A)[ 🐍 $output ]($style)'
 style   = "bg:#D7AF00 fg:#1C1C1C bold"
 when    = 'command -v python3 >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
@@ -49,7 +49,7 @@ shell   = ["bash", "--noprofile", "--norc"]
 # ── Ruby ──────────────────────────────────────────────────────────────────────
 [custom.ruby_ver]
 command = 'ruby -v 2>/dev/null | awk "{print \$2}"'
-format  = '[](bg:#870000 fg:#D7AF00)[ 💎 $output ]($style)'
+format  = '[](bg:#870000 fg:#D7AF00)[ 💎 $output ]($style)'
 style   = "bg:#870000 fg:#FFFFFF bold"
 when    = 'command -v ruby >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
@@ -57,7 +57,7 @@ shell   = ["bash", "--noprofile", "--norc"]
 # ── Node.js ───────────────────────────────────────────────────────────────────
 [custom.node_ver]
 command = 'node -v 2>/dev/null | sed "s/v//"'
-format  = '[](bg:#005F87 fg:#870000)[ $output ]($style)'
+format  = '[](bg:#005F87 fg:#870000)[ $output ]($style)'
 style   = "bg:#005F87 fg:#FFFFFF bold"
 when    = 'command -v node >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
