@@ -18,13 +18,18 @@ backup_dir  "${HOME}/.config"
 
 # ── chezmoi init ──────────────────────────────────────────────────────────────
 _chezmoi_src="${BOOTSTRAP_ROOT}/chezmoi"
-_chezmoi_config="${HOME}/.config/chezmoi"
 
-if [[ -d "${HOME}/.local/share/chezmoi" ]] || chezmoi data &>/dev/null 2>&1; then
-  warn "chezmoi already initialized."
-  warn "Source: $(chezmoi source-path 2>/dev/null || echo 'unknown')"
-  warn "If you want to re-init, run: chezmoi init --source=${_chezmoi_src}"
+# Check if chezmoi already points to our source directory.
+_current_src=$(chezmoi source-path 2>/dev/null || echo "")
+
+if [[ "$_current_src" == "$_chezmoi_src" ]]; then
+  skip "chezmoi source already set to bootstrap chezmoi/"
+elif [[ -n "$_current_src" && -d "$_current_src" ]]; then
+  warn "chezmoi currently points to: ${_current_src}"
+  warn "Re-initializing with bootstrap source: ${_chezmoi_src}"
+  run chezmoi init --source="${_chezmoi_src}"
 else
+  # Source missing or not set — (re-)init with our directory.
   info "Initializing chezmoi with source: ${_chezmoi_src}"
   run chezmoi init --source="${_chezmoi_src}"
 fi
