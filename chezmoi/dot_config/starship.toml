@@ -41,7 +41,7 @@ staged   = "+${count}"
 symbol = " "
 format = '[$symbol($version )(\($virtualenv\) )]($style)'
 
-[node]
+[nodejs]
 symbol = " "
 format = '[$symbol($version )]($style)'
 
