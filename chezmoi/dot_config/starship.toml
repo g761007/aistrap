@@ -74,7 +74,7 @@ read_only         = " 󰌾"
 
 # ── Git branch ────────────────────────────────────────────────────────────────
 [git_branch]
-symbol = " "
+symbol = " "
 style  = "bg:#AFD700 fg:#1C1C1C bold"
 format = "[ $symbol$branch ]($style)"
 
