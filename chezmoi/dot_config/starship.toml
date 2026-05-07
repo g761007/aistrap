@@ -1,113 +1,144 @@
-# Starship prompt — Pastel Powerline style (requires Nerd Font)
-# Docs: https://starship.rs/config/
+# Starship — Powerlevel10k Rainbow style
+# Requires Nerd Font (JetBrainsMono / SauceCodePro Nerd Font)
+# Powerline separators:  (U+E0B0) /  (U+E0B2) / fine:  (U+E0B1) /  (U+E0B3)
 
-# Two-line prompt with powerline separators
+# ── Left prompt ───────────────────────────────────────────────────────────────
 format = """
-[](fg:#1a1b26)\
 $os\
-$username\
-[](bg:#16213e fg:#1a1b26)\
+[](bg:#61AFEF fg:#282C34)\
+$username$hostname\
+[](bg:#98C379 fg:#61AFEF)\
 $directory\
-[](bg:#0f3460 fg:#16213e)\
+[](bg:#E5C07B fg:#98C379)\
 $git_branch\
 $git_status\
-[](bg:#533483 fg:#0f3460)\
+[](bg:#C678DD fg:#E5C07B)\
 $python\
 $nodejs\
 $ruby\
 $rust\
 $golang\
-[](fg:#533483)\
+[](fg:#C678DD)\
 $fill\
-$cmd_duration\
-$time\
 $line_break\
+$status\
 $character"""
 
+# ── Right prompt ──────────────────────────────────────────────────────────────
+right_format = """
+$cmd_duration\
+[](fg:#3E4452)\
+$time\
+[](fg:#3E4452)"""
+
+# ── OS ───────────────────────────────────────────────────────────────────────
 [os]
 disabled = false
-style = "bg:#1a1b26 fg:#c0caf5 bold"
-format = '[ $symbol ]($style)'
+format   = "[$symbol]($style)"
+style    = "bg:#282C34 fg:#ABB2BF bold"
 
 [os.symbols]
-Macos = ""
+Macos   = "  "
+Linux   = "  "
+Windows = "  "
 
+# ── Username / Hostname (show only over SSH) ──────────────────────────────────
 [username]
 show_always = false
-style_user = "bg:#1a1b26 fg:#7aa2f7 bold"
-style_root = "bg:#1a1b26 fg:#f7768e bold"
-format = '[ $user ]($style)'
+style_user  = "bg:#61AFEF fg:#282C34 bold"
+style_root  = "bg:#E06C75 fg:#282C34 bold"
+format      = "[ $user]($style)"
 
+[hostname]
+ssh_only = true
+style    = "bg:#61AFEF fg:#282C34"
+format   = "[@$hostname ]($style)"
+
+# ── Directory ─────────────────────────────────────────────────────────────────
 [directory]
-style = "bg:#16213e fg:#7dcfff bold"
-format = "[ 󰉋 $path ]($style)"
+style             = "bg:#98C379 fg:#282C34 bold"
+format            = "[ 󰉋 $path ]($style)"
 truncation_length = 3
-truncate_to_repo = true
-read_only = " 󰌾"
-home_symbol = "~"
+truncate_to_repo  = true
+read_only         = " 󰌾"
+home_symbol       = "~"
 
+[directory.substitutions]
+"Documents" = "󰈙"
+"Downloads" = " "
+"Desktop"   = "󰇄"
+
+# ── Git ───────────────────────────────────────────────────────────────────────
 [git_branch]
 symbol = " "
-style = "bg:#0f3460 fg:#bb9af7"
-format = '[ $symbol$branch ]($style)'
+style  = "bg:#E5C07B fg:#282C34 bold"
+format = "[ $symbol$branch ]($style)"
 
 [git_status]
-style = "bg:#0f3460 fg:#f7768e"
-format = '[$all_status$ahead_behind ]($style)'
-ahead  = "⇡${count}"
-behind = "⇣${count}"
+style    = "bg:#E5C07B fg:#282C34"
+format   = "[$all_status$ahead_behind]($style)[ ]($style)"
+ahead    = "⇡${count}"
+behind   = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 modified = "!${count}"
 untracked = "?${count}"
 staged   = "+${count}"
 deleted  = "✘${count}"
 stashed  = "≡"
+conflicted = "~${count}"
 
+# ── Languages ─────────────────────────────────────────────────────────────────
 [python]
-symbol = " "
-style = "bg:#533483 fg:#e0af68"
-format = '[ $symbol($version )(\($virtualenv\) )]($style)'
+symbol           = " "
+style            = "bg:#C678DD fg:#282C34 bold"
+format           = '[ $symbol($version )(\($virtualenv\) )]($style)'
 detect_extensions = ["py"]
 
 [nodejs]
-symbol = " "
-style = "bg:#533483 fg:#9ece6a"
-format = '[ $symbol($version )]($style)'
-detect_files = ["package.json", ".nvmrc"]
+symbol       = " "
+style        = "bg:#C678DD fg:#282C34 bold"
+format       = "[ $symbol($version )]($style)"
+detect_files = ["package.json", ".nvmrc", "yarn.lock"]
 
 [ruby]
 symbol = " "
-style = "bg:#533483 fg:#f7768e"
-format = '[ $symbol($version )]($style)'
+style  = "bg:#C678DD fg:#282C34 bold"
+format = "[ $symbol($version )]($style)"
 
 [rust]
-symbol = " "
-style = "bg:#533483 fg:#e0af68"
-format = '[ $symbol($version )]($style)'
+symbol = "󱘗 "
+style  = "bg:#C678DD fg:#282C34 bold"
+format = "[ $symbol($version )]($style)"
 
 [golang]
 symbol = " "
-style = "bg:#533483 fg:#7dcfff"
-format = '[ $symbol($version )]($style)'
+style  = "bg:#C678DD fg:#282C34 bold"
+format = "[ $symbol($version )]($style)"
 
+# ── Right side ────────────────────────────────────────────────────────────────
 [fill]
 symbol = " "
 
 [cmd_duration]
 min_time = 2000
-style = "fg:#565f89"
-format = "[$duration]($style) "
+style    = "fg:#ABB2BF italic"
+format   = "[ 󱎫 $duration ]($style)"
 
 [time]
-disabled = false
+disabled    = false
 time_format = "%H:%M"
-style = "fg:#565f89"
-format = '[  $time]($style) '
+style       = "bg:#3E4452 fg:#ABB2BF"
+format      = "[ 󰥔 $time ]($style)"
 
+# ── Prompt character ──────────────────────────────────────────────────────────
 [character]
-success_symbol = "[❯](bold #9ece6a)"
-error_symbol   = "[❯](bold #f7768e)"
-vimcmd_symbol  = "[❮](bold #bb9af7)"
+success_symbol = "[❯](bold #98C379)"
+error_symbol   = "[❯](bold #E06C75)"
+vimcmd_symbol  = "[❮](bold #C678DD)"
 
-[line_break]
+[status]
 disabled = false
+style    = "fg:#E06C75 bold"
+format   = "[$symbol$status ]($style)"
+symbol   = "✘ "
+success_symbol = ""
