@@ -23,19 +23,19 @@ cd ~/bootstrap
 | Phase | Description |
 |-------|-------------|
 | 00 | Preflight checks (macOS version, Xcode CLT, disk space) |
-| 01 | Homebrew + Brewfile (all CLI tools and GUI apps) |
+| 01 | Homebrew + Brewfile (all CLI tools, GUI apps, and Nerd Fonts) |
 | 02 | zsh + Oh My Zsh + plugins |
 | 03 | Runtime management: mise → Python / Ruby / Node / Bun |
-| 04 | Modern CLI: eza / bat / ripgrep / fd / fzf / zoxide / lazygit / delta |
+| 04 | Modern CLI: eza / bat / ripgrep / fd / fzf / zoxide / lazygit / delta / procs / dust / hyperfine / gh |
 | 05 | Starship prompt |
 | 06 | AI CLI: Claude Code / Codex / Gemini + auto-update system |
 | 07 | Python tooling: uv (pip/venv/poetry replacement) |
 | 08 | Node ecosystem: pnpm / bun |
 | 09 | Container & Kubernetes: OrbStack / kubectl / helm / k9s |
 | 10 | Cloud CLI: awscli / gcloud / terraform |
-| 11 | Editors: VS Code + Neovim |
-| 12 | GUI apps: Raycast / TablePlus / Bruno / CleanShot / Rectangle |
-| 13 | Dotfiles: chezmoi takes over ~/.zshrc / ~/.gitconfig / ~/.ssh/config |
+| 11 | Editors: VS Code + Neovim + tmux |
+| 12 | GUI apps: Ghostty / Warp / Raycast / TablePlus / Bruno / CleanShot / Rectangle / OrbStack |
+| 13 | Dotfiles: chezmoi manages ~/.zshrc / ~/.gitconfig / ~/.ssh/config / starship.toml / ghostty / lazygit / nvim |
 | 14 | macOS defaults: Finder / Dock / Keyboard / Screenshot |
 | 15 | Security: SSH key / GPG / 1Password CLI |
 | 99 | Doctor: health check |
@@ -74,9 +74,13 @@ The bootstrap installs a background update checker for Claude Code, Codex, and G
 Dotfiles are managed by [chezmoi](https://chezmoi.io) with source in `chezmoi/`.
 
 ```bash
-chezmoi edit ~/.zshrc    # edit via chezmoi
-chezmoi apply            # apply to home directory
-chezmoi diff             # preview changes
+chezmoi edit ~/.zshrc                        # edit via chezmoi
+chezmoi edit ~/.config/starship.toml        # edit starship prompt
+chezmoi edit ~/.config/ghostty/config       # edit Ghostty terminal
+chezmoi edit ~/.config/lazygit/config.yml   # edit lazygit
+chezmoi edit ~/.config/nvim/init.lua        # edit Neovim
+chezmoi apply                                # apply to home directory
+chezmoi diff                                 # preview changes
 ```
 
 See `chezmoi/README.md` for the migration guide from your existing dotfiles.
@@ -102,15 +106,15 @@ bash tests/smoke.sh
 ## Stack
 
 ```
-Ghostty / Warp
+Ghostty / Warp  (JetBrains Mono / Roboto Mono / Sauce Code Pro — Nerd Fonts)
 + zsh + starship + Oh My Zsh
 + mise (python / ruby / node / bun)
 + uv + pnpm
-+ eza + bat + fd + ripgrep + zoxide + fzf
++ eza + bat + fd + ripgrep + zoxide + fzf + procs + dust
 + lazygit + delta
 + tmux + neovim
 + claude-code + codex + gemini-cli
 + gh + kubectl + k9s
 + OrbStack + Raycast
-+ chezmoi
++ chezmoi  (zshrc / gitconfig / ssh / starship / ghostty / lazygit / nvim)
 ```
