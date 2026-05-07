@@ -1,23 +1,20 @@
-# Starship — P10k Agnoster style
+# Starship — Bullet Train style
 # Layout: [time][user@host][python][ruby][node][path][git]
-# Requires Nerd Font
+# Colors: terminal 256-color palette equivalents (high-saturation)
 
-# ── Left prompt ───────────────────────────────────────────────────────────────
-# Language segments use custom modules so they always show regardless of
-# which files are in the current directory.
 format = """\
 $time\
-[](bg:#262626 fg:#111111)\
+[](bg:#3A3A3A fg:#262626)\
 $username$hostname\
 ${custom.python_ver}\
 ${custom.ruby_ver}\
 ${custom.node_ver}\
-[](bg:#303030 fg:#3E7C3E)\
+[](bg:#0087AF fg:#005F87)\
 $directory\
-[](bg:#4B3882 fg:#303030)\
+[](bg:#AFD700 fg:#0087AF)\
 $git_branch\
 $git_status\
-[](fg:#4B3882)\
+[](fg:#AFD700)\
 $line_break\
 $character"""
 
@@ -25,49 +22,49 @@ $character"""
 [time]
 disabled    = false
 time_format = "%H:%M:%S"
-style       = "bg:#111111 fg:#9E9E9E"
+style       = "bg:#262626 fg:#9E9E9E"
 format      = "[ $time ]($style)"
 
-# ── Username / Hostname ───────────────────────────────────────────────────────
+# ── User @ Host ───────────────────────────────────────────────────────────────
 [username]
 show_always = true
-style_user  = "bg:#262626 fg:#E0E0E0"
-style_root  = "bg:#CC342D fg:#FFFFFF bold"
+style_user  = "bg:#3A3A3A fg:#EEEEEE"
+style_root  = "bg:#870000 fg:#FFFFFF bold"
 format      = "[ $user]($style)"
 
 [hostname]
 ssh_only = false
-style    = "bg:#262626 fg:#9E9E9E"
+style    = "bg:#3A3A3A fg:#AAAAAA"
 format   = "[@$hostname ]($style)"
 trim_at  = "."
 
-# ── Python (always show via custom module) ────────────────────────────────────
+# ── Python ────────────────────────────────────────────────────────────────────
 [custom.python_ver]
 command = 'python3 -V 2>/dev/null | cut -d" " -f2'
-format  = '[](bg:#FAAB2E fg:#262626)[ 🐍 $output ]($style)'
-style   = "bg:#FAAB2E fg:#111111 bold"
+format  = '[](bg:#D7AF00 fg:#3A3A3A)[ 🐍 $output ]($style)'
+style   = "bg:#D7AF00 fg:#1C1C1C bold"
 when    = 'command -v python3 >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
 
-# ── Ruby (always show via custom module) ──────────────────────────────────────
+# ── Ruby ──────────────────────────────────────────────────────────────────────
 [custom.ruby_ver]
 command = 'ruby -v 2>/dev/null | awk "{print \$2}"'
-format  = '[](bg:#CC342D fg:#FAAB2E)[ 💎 $output ]($style)'
-style   = "bg:#CC342D fg:#FFFFFF bold"
+format  = '[](bg:#870000 fg:#D7AF00)[ 💎 $output ]($style)'
+style   = "bg:#870000 fg:#FFFFFF bold"
 when    = 'command -v ruby >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
 
-# ── Node.js (always show via custom module) ───────────────────────────────────
+# ── Node.js ───────────────────────────────────────────────────────────────────
 [custom.node_ver]
 command = 'node -v 2>/dev/null | sed "s/v//"'
-format  = '[](bg:#3E7C3E fg:#CC342D)[ $output ]($style)'
-style   = "bg:#3E7C3E fg:#FFFFFF bold"
+format  = '[](bg:#005F87 fg:#870000)[ $output ]($style)'
+style   = "bg:#005F87 fg:#FFFFFF bold"
 when    = 'command -v node >/dev/null 2>&1'
 shell   = ["bash", "--noprofile", "--norc"]
 
 # ── Directory ─────────────────────────────────────────────────────────────────
 [directory]
-style             = "bg:#303030 fg:#87D7FF bold"
+style             = "bg:#0087AF fg:#FFFFFF bold"
 format            = "[ $path ]($style)"
 truncation_length = 4
 truncate_to_repo  = false
@@ -78,23 +75,23 @@ read_only         = " 󰌾"
 # ── Git branch ────────────────────────────────────────────────────────────────
 [git_branch]
 symbol = " "
-style  = "bg:#4B3882 fg:#FFFFFF bold"
+style  = "bg:#AFD700 fg:#005F00 bold"
 format = "[ $symbol$branch ]($style)"
 
 # ── Git status ────────────────────────────────────────────────────────────────
 [git_status]
-style    = "bg:#4B3882 fg:#FFFFFF"
-format   = "[$all_status$ahead_behind]($style)[ ]($style)"
-ahead    = "⇡${count}"
-behind   = "⇣${count}"
-diverged = "⇕"
-modified = "!${count}"
+style     = "bg:#AFD700 fg:#005F00"
+format    = "[$all_status$ahead_behind]($style)[ ]($style)"
+ahead     = "⇡${count}"
+behind    = "⇣${count}"
+diverged  = "⇕"
+modified  = "!${count}"
 untracked = "?${count}"
-staged   = "+${count}"
-deleted  = "✘"
-stashed  = "≡"
+staged    = "+${count}"
+deleted   = "✘"
+stashed   = "≡"
 
 # ── Prompt character ──────────────────────────────────────────────────────────
 [character]
-success_symbol = "[❯](bold #98C379)"
-error_symbol   = "[❯](bold #E06C75)"
+success_symbol = "[❯](bold #AFD700)"
+error_symbol   = "[❯](bold #D70000)"
