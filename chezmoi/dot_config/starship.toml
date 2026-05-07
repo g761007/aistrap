@@ -1,54 +1,113 @@
-# Starship prompt configuration
+# Starship prompt — Pastel Powerline style (requires Nerd Font)
 # Docs: https://starship.rs/config/
 
+# Two-line prompt with powerline separators
 format = """
+[](fg:#1a1b26)\
+$os\
 $username\
-$hostname\
+[](bg:#16213e fg:#1a1b26)\
 $directory\
+[](bg:#0f3460 fg:#16213e)\
 $git_branch\
 $git_status\
+[](bg:#533483 fg:#0f3460)\
 $python\
-$node\
+$nodejs\
 $ruby\
 $rust\
 $golang\
+[](fg:#533483)\
+$fill\
 $cmd_duration\
+$time\
 $line_break\
 $character"""
 
-[character]
-success_symbol = "[❯](bold green)"
-error_symbol   = "[❯](bold red)"
+[os]
+disabled = false
+style = "bg:#1a1b26 fg:#c0caf5 bold"
+format = '[ $symbol ]($style)'
+
+[os.symbols]
+Macos = ""
+
+[username]
+show_always = false
+style_user = "bg:#1a1b26 fg:#7aa2f7 bold"
+style_root = "bg:#1a1b26 fg:#f7768e bold"
+format = '[ $user ]($style)'
 
 [directory]
-truncation_length = 4
-truncate_to_repo  = true
-style             = "bold blue"
+style = "bg:#16213e fg:#7dcfff bold"
+format = "[ 󰉋 $path ]($style)"
+truncation_length = 3
+truncate_to_repo = true
+read_only = " 󰌾"
+home_symbol = "~"
 
 [git_branch]
 symbol = " "
-style  = "bold purple"
+style = "bg:#0f3460 fg:#bb9af7"
+format = '[ $symbol$branch ]($style)'
 
 [git_status]
+style = "bg:#0f3460 fg:#f7768e"
+format = '[$all_status$ahead_behind ]($style)'
 ahead  = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 modified = "!${count}"
 untracked = "?${count}"
 staged   = "+${count}"
+deleted  = "✘${count}"
+stashed  = "≡"
 
 [python]
 symbol = " "
-format = '[$symbol($version )(\($virtualenv\) )]($style)'
+style = "bg:#533483 fg:#e0af68"
+format = '[ $symbol($version )(\($virtualenv\) )]($style)'
+detect_extensions = ["py"]
 
 [nodejs]
 symbol = " "
-format = '[$symbol($version )]($style)'
+style = "bg:#533483 fg:#9ece6a"
+format = '[ $symbol($version )]($style)'
+detect_files = ["package.json", ".nvmrc"]
+
+[ruby]
+symbol = " "
+style = "bg:#533483 fg:#f7768e"
+format = '[ $symbol($version )]($style)'
+
+[rust]
+symbol = " "
+style = "bg:#533483 fg:#e0af68"
+format = '[ $symbol($version )]($style)'
+
+[golang]
+symbol = " "
+style = "bg:#533483 fg:#7dcfff"
+format = '[ $symbol($version )]($style)'
+
+[fill]
+symbol = " "
 
 [cmd_duration]
 min_time = 2000
-format   = "took [$duration](bold yellow) "
+style = "fg:#565f89"
+format = "[$duration]($style) "
 
-[hostname]
-ssh_only = true
-format   = "[@$hostname](bold red) "
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "fg:#565f89"
+format = '[  $time]($style) '
+
+[character]
+success_symbol = "[❯](bold #9ece6a)"
+error_symbol   = "[❯](bold #f7768e)"
+vimcmd_symbol  = "[❮](bold #bb9af7)"
+
+[line_break]
+disabled = false
