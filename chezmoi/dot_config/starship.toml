@@ -93,9 +93,8 @@ untracked = "?${count}"
 staged   = "+${count}"
 deleted  = "✘"
 stashed  = "≡"
-clean    = "✔"
 
 # ── Prompt character ──────────────────────────────────────────────────────────
 [character]
-success_symbol = "[$](bold #98C379)"
-error_symbol   = "[$](bold #E06C75)"
+success_symbol = "[❯](bold #98C379)"
+error_symbol   = "[❯](bold #E06C75)"
