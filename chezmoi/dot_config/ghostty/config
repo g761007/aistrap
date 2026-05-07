@@ -1,0 +1,6 @@
+# Font — must be a Nerd Font for powerline/devicons glyphs
+font-family = "JetBrainsMono Nerd Font"
+font-size = 14
+
+# Theme
+theme = dark:GruvboxDark,light:GruvboxDark
