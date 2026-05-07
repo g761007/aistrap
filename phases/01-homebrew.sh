@@ -24,6 +24,6 @@ ensure_brew_env
 
 step "Brew Bundle"
 info "Installing packages from Brewfile (this may take a while)..."
-run brew bundle --file="${BOOTSTRAP_ROOT}/Brewfile" --no-lock
+run brew bundle --file="${BOOTSTRAP_ROOT}/Brewfile"
 
 info "Homebrew setup complete."
