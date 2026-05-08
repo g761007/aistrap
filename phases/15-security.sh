@@ -36,22 +36,11 @@ fi
 info "SSH keys loaded into agent."
 
 # ── SSH config ────────────────────────────────────────────────────────────────
-_ssh_config="${HOME}/.ssh/config"
-if [[ ! -f "$_ssh_config" ]]; then
-  info "Creating default ~/.ssh/config..."
-  run mkdir -p "${HOME}/.ssh"
-  if ! is_dryrun; then
-    cat > "$_ssh_config" <<'SSH_CONFIG'
-Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_ed25519
-SSH_CONFIG
-    chmod 600 "$_ssh_config"
-  fi
-else
-  skip "~/.ssh/config already exists"
-fi
+# ~/.ssh/config is managed by phase 13 (chezmoi). No fallback written here
+# to avoid two divergent sources of truth.
+info "~/.ssh/config is managed by phase 13 (chezmoi apply)."
+run mkdir -p "${HOME}/.ssh"
+run chmod 700 "${HOME}/.ssh"
 
 # ── GPG ───────────────────────────────────────────────────────────────────────
 if has_command gpg; then
