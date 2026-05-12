@@ -118,3 +118,7 @@ Ghostty / Warp  (JetBrains Mono / Roboto Mono / Sauce Code Pro — Nerd Fonts)
 + OrbStack + Raycast
 + chezmoi  (zshrc / gitconfig / ssh / starship / ghostty / lazygit / nvim)
 ```
+
+## License
+
+[MIT](LICENSE) © Daniel Hsieh
