@@ -13,6 +13,9 @@ eval "$(/usr/local/bin/brew shellenv)"
 export PATH="${HOME}/.local/bin:${PATH}"
 
 # ── mise (runtime version manager) ───────────────────────────────────────────
+# Reset mise state inherited from the parent process so mise can re-prepend its paths
+unset __MISE_ORIG_PATH __MISE_DIFF __MISE_SESSION __MISE_ZSH_PRECMD_RUN __MISE_ZSH_CHPWD_RAN
+path=(${path:#$HOME/.local/share/mise/*})
 eval "$(mise activate zsh)"
 
 # ── Starship prompt ───────────────────────────────────────────────────────────
